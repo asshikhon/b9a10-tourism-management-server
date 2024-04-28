@@ -36,13 +36,17 @@ const result = await cursor.toArray();
 res.send(result);
 })
 
+app.get('/myList/:email', async (req, res) => {
+  console.log(req.params.email);
+const result = await spotCollection.find({ email: req.params.email }).toArray();
+res.send(result);
+})
 
 app.post('/spot', async(req, res) => {
 const newSpot = req.body;
-console.log(newSpot)
+console.log(newSpot);
 const result = await spotCollection.insertOne(newSpot);
 res.send(result);
-
 })
 
     // Send a ping to confirm a successful connection
