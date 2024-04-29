@@ -42,12 +42,22 @@ const result = await spotCollection.find({ email: req.params.email }).toArray();
 res.send(result);
 })
 
+app.get('/spot/:id', async (req, res) => {
+const id = req.params.id;
+const query = {_id: new ObjectId(id)};
+const user = await spotCollection.findOne(query);
+res.send(user);
+
+})
+
+
 app.post('/spot', async(req, res) => {
 const newSpot = req.body;
 console.log(newSpot);
 const result = await spotCollection.insertOne(newSpot);
 res.send(result);
 })
+
 
 app.delete('/spot/:id', async (req, res) => {
 const id = req.params.id;
