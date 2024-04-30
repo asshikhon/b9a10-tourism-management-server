@@ -32,12 +32,29 @@ async function run() {
     // await client.connect();
 
     const spotCollection = client.db('spotDB').collection('spot');
+    const countryCollection = client.db('spotDB').collection('countries');
 
     app.get('/spot', async (req, res) => {
       const cursor = spotCollection.find();
       const result = await cursor.toArray();
       res.send(result);
     })
+
+    app.get('/countries', async (req, res) => {
+      const cursor = countryCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
+    app.get('/countries/:countryName', async (req, res) => {
+      const countryName = req.params.countryName;
+      const query = { countryName: countryName }; 
+      const cursor = spotCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+
 
     app.get('/myList/:email', async (req, res) => {
       console.log(req.params.email);
